@@ -18,17 +18,27 @@ public class FormularioService {
 
     public static String answerNameQuestion() {
         System.out.println(readFormulario().getFirst());
-        return Validator.validateNamePet(SCANNER.nextLine());
+        String namePet = SCANNER.nextLine();
+        if (!Validator.validateNamePet(namePet)) throw new IllegalArgumentException("Digite um valor válido");
+        return namePet;
     }
 
     public static Tipo answerTypePetQuestion() {
         System.out.println(readFormulario().get(1));
-        return Validator.validateTypePet(SCANNER.nextLine());
+        String typePet = SCANNER.nextLine();
+        if (!Validator.validateTypePet(typePet)) {
+            throw new IllegalArgumentException("Digite um tipo válido: (Gato/Cachorro)");
+        }
+        return typePet.equalsIgnoreCase("Cachorro") ? Tipo.CACHORRO : Tipo.GATO;
     }
 
     public static Sexo answerSexPetQuestion() {
         System.out.println(readFormulario().get(2));
-        return Validator.validateSexPet(SCANNER.nextLine());
+        String sexPet = SCANNER.nextLine();
+        if (!Validator.validateSexPet(sexPet)) {
+            throw new IllegalArgumentException("Digite um sexo válido: (Macho/Femea");
+        }
+        return sexPet.equalsIgnoreCase("Macho") ? Sexo.MACHO : Sexo.FEMEA;
     }
 
     public static List<String> answerAddressPetQuestion() {
@@ -44,15 +54,25 @@ public class FormularioService {
 
     public static Double answerAgePetQuestion() {
         System.out.println(readFormulario().get(4));
-        return Validator.validateAgePet(SCANNER.nextLine());
+        String agePet = SCANNER.nextLine();
+        if (!Validator.validateAgePet(agePet)) {
+            throw new IllegalArgumentException("Idade acima de 20 não permitida");
+        }
+        return Double.parseDouble(agePet);
     }
 
-    public static Double answerWeightPetQuestion() {
-        System.out.println(readFormulario().get(5));
-        return Validator.validateWeightPet(SCANNER.nextLine());
-    }
+//    public static void answerWeightPetQuestion() {
+//        System.out.println(readFormulario().get(5));
+//        String petWeight = SCANNER.nextLine();
+//        if(petWeight.contains())
+//
+//        if (!Validator.validateWeightPet()) {
+//            throw new IllegalArgumentException("Peso abaixo de 0.5kg ou acima de 20kg não permitido");
+//        }
+//
+//    }
 
-    public static String answerRacePetQuestion(){
+    public static String answerRacePetQuestion() {
         System.out.println(readFormulario().get(6));
         return Validator.validateRacePet(SCANNER.nextLine());
     }
