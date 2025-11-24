@@ -44,13 +44,8 @@ public class Program {
         Double weightPet = FormularioService.answerWeightPetQuestion();
         String racePet = FormularioService.answerRacePetQuestion();
 
-        System.out.println(namePet);
-        System.out.println(typePet);
-        System.out.println(sexPet);
-        System.out.println(adressPet);
-        System.out.println(agePet);
-        System.out.println(weightPet);
-        System.out.println(racePet);
+        Pet pet = new Pet(namePet, typePet, sexPet, adressPet, agePet, weightPet, racePet);
+
 
         finalizar = true;
     }
