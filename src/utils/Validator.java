@@ -9,8 +9,7 @@ import java.util.regex.Pattern;
 public class Validator {
     public static boolean validateNamePet(String name) {
         if (name.isBlank()) return true;
-        name = name.trim();
-        return Pattern.matches("^[A-Za-z]+(?:\\s+[A-Za-z]+)+$", name);
+        return Pattern.matches("^[A-Za-z]+(?:\\s+[A-Za-z]+)+$", name.trim());
     }
 
     public static boolean validateTypePet(String name) {
@@ -22,19 +21,16 @@ public class Validator {
     }
 
     public static boolean validateAgePet(String age) {
-        return Double.parseDouble(age) > 20;
+        return Double.parseDouble(age) <= 20;
     }
 
-    public static boolean validateWeightPet(Double weightPet) {
-        return weightPet >= 0.5 && weightPet <= 60;
+    public static boolean validateWeightPet(String weightPet) {
+        double weightPetParsed = Double.parseDouble(weightPet.replace(",", "."));
+        return weightPetParsed >= 0.5 && weightPetParsed <= 60;
     }
 
-    public static String validateRacePet(String race) {
-        if(race.isBlank()) return "NÃO INFORMADO";
-        boolean isValidRace = Pattern.matches("^[A-Za-z]+(?:\\s+[A-Za-z]+)*$", race);
-        if(!isValidRace) {
-            throw new IllegalArgumentException("Caracteres especiais e/ou números não são permitidos");
-        }
-        return race;
+    public static boolean validateRacePet(String race) {
+        if(race.isBlank()) return false;
+        return Pattern.matches("^[A-Za-z]+(?:\\s+[A-Za-z]+)*$", race.trim());
     }
 }

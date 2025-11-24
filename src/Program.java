@@ -36,17 +36,21 @@ public class Program {
     }
 
     private static void cadastrar() {
-//        String namePet = FormularioService.answerNameQuestion();
-//        Tipo typePet = FormularioService.answerTypePetQuestion();
-//        Sexo sexPet = FormularioService.answerSexPetQuestion();
-//        List<String> adressPet = FormularioService.answerAddressPetQuestion();
-//        Double agePet = FormularioService.answerAgePetQuestion();
-//        Double weightPet = FormularioService.answerWeightPetQuestion();
-//        String racePet = FormularioService.answerRacePetQuestion();
+        String namePet = FormularioService.answerNameQuestion();
+        Tipo typePet = FormularioService.answerTypePetQuestion();
+        Sexo sexPet = FormularioService.answerSexPetQuestion();
+        List<String> adressPet = FormularioService.answerAddressPetQuestion();
+        Double agePet = FormularioService.answerAgePetQuestion();
+        Double weightPet = FormularioService.answerWeightPetQuestion();
+        String racePet = FormularioService.answerRacePetQuestion();
 
-//        FormularioService.answerWeightPetQuestion();
-
-//        System.out.println(value);
+        System.out.println(namePet);
+        System.out.println(typePet);
+        System.out.println(sexPet);
+        System.out.println(adressPet);
+        System.out.println(agePet);
+        System.out.println(weightPet);
+        System.out.println(racePet);
 
         finalizar = true;
     }

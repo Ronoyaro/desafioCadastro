@@ -1,3 +1,9 @@
-.idea
+
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+.idea/
+*.iml/
+target/
 .code
 .vscode
