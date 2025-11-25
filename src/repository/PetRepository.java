@@ -6,20 +6,25 @@ import enums.Tipo;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class PetRepository {
-    private static List<String> archivesPet = new ArrayList<>();
+
 
     public static void main(String[] args) throws IOException {
-        save(new Pet("nick fury", Tipo.CACHORRO, Sexo.MACHO, List.of("9", "ssa", "brazil"), 5D, 6D, "vira lata"));
-
+//        save(new Pet("nick fury", Tipo.CACHORRO, Sexo.MACHO, List.of("9", "ssa", "brazil"), 5D, 6D, "vira lata"));
+//        getAllPathsPet();
+        list().forEach(System.out::println);
 
     }
 
@@ -36,35 +41,48 @@ public class PetRepository {
     public static void save(Pet pet) throws IOException {
         Path filePet = createFile(pet);
         try (BufferedWriter br = Files.newBufferedWriter(filePet)) {
-            String name = pet.getNome();
-            Tipo type = pet.getTipo();
-            Sexo sex = pet.getSexo();
-            List<String> endereco = pet.getEndereco();
-            Double age = pet.getIdade();
-            Double weight = pet.getPeso();
-            String race = pet.getRaca();
-            br.write("1 - " + name);
-            br.newLine();
-            br.write("2 - " + type.getTIPO());
-            br.newLine();
-            br.write("3 - " + sex.getSEXO());
-            br.newLine();
-            br.write("4 - " + endereco.toString());
-            br.newLine();
-            br.write("5 - " + age.toString());
-            br.newLine();
-            br.write("6 - " + weight.toString());
-            br.newLine();
-            br.write("7 - " + race);
+            br.write("1 - " + pet.getNome() + "\n");
+            br.write("2 - " + pet.getTipo().getTIPO() + "\n");
+            br.write("3 - " + pet.getSexo().getSEXO() + "\n");
+            br.write("4 - " + pet.getEndereco().toString() + "\n");
+            br.write("5 - " + pet.getIdade().toString() + "\n");
+            br.write("6 - " + pet.getPeso().toString() + "\n");
+            br.write("7 - " + pet.getRaca() + "\n");
             br.flush();
-            archivesPet.add(filePet.toString());
             System.out.println("Pet criado com sucesso!");
-            System.out.println(archivesPet);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
+    private static List<Path> getAllPathsPet() {
+        List<Path> archivesPet = new ArrayList<>();
+        Path databasePets = Paths.get("src\\db_pets");
+        try (DirectoryStream<Path> files = Files.newDirectoryStream(databasePets, "*.txt")) {
+            Iterator<Path> paths = files.iterator();
+            paths.forEachRemaining(archivesPet::add);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return archivesPet;
+    }
 
+    public static List<Pet> list() {
+        List<Pet> pets = new ArrayList<>();
+        getAllPathsPet().forEach(p -> {
+            try (Stream<String> path = Files.lines(p)) {
+                List<String> list = path.map(s -> s.replaceAll("^\\d+\\s*-\\s*", "")).toList();
+                List<String> adress = Arrays.stream(list.get(3).split(",")).toList();
+                Pet pet = new Pet(list.getFirst(),
+                        (list.get(1).equalsIgnoreCase("Cachorro") ? Tipo.CACHORRO : Tipo.GATO),
+                        (list.get(2).equalsIgnoreCase("Macho") ? Sexo.MACHO : Sexo.FEMEA),
+                        adress, Double.parseDouble(list.get(4)), Double.parseDouble(list.get(5)), list.get(6));
+                pets.add(pet);
 
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return pets;
+    }
 }

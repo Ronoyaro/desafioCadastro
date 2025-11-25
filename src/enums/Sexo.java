@@ -13,4 +13,5 @@ public enum Sexo {
     public String getSEXO() {
         return SEXO;
     }
+
 }
