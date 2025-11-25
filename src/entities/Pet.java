@@ -6,6 +6,7 @@ import enums.Tipo;
 import java.util.List;
 
 public class Pet {
+    private static Long id;
     private String nome;
     private Tipo tipo;
     private Sexo sexo;
@@ -14,13 +15,13 @@ public class Pet {
     private Double peso;
     private String raca;
 
-    public Pet(String nome,
-               Tipo tipo, Sexo sexo,
-               List<String> endereco,
-               Double idade,
-               Double peso,
-               String raca) {
-
+    public Pet(
+            String nome,
+            Tipo tipo, Sexo sexo,
+            List<String> endereco,
+            Double idade,
+            Double peso,
+            String raca) {
         this.nome = nome;
         this.tipo = tipo;
         this.sexo = sexo;
@@ -30,18 +31,6 @@ public class Pet {
         this.raca = raca;
     }
 
-    @Override
-    public String toString() {
-        return "Pet{" +
-                "nome='" + nome + '\'' +
-                ", tipo=" + tipo +
-                ", sexo=" + sexo +
-                ", endereco=" + endereco +
-                ", idade=" + idade +
-                ", peso=" + peso +
-                ", raca='" + raca + '\'' +
-                '}';
-    }
     public String getNome() {
         return nome;
     }
@@ -96,5 +85,18 @@ public class Pet {
 
     public void setRaca(String raca) {
         this.raca = raca;
+    }
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "nome='" + nome + '\'' +
+                ", tipo=" + tipo +
+                ", sexo=" + sexo +
+                ", endereco=" + endereco +
+                ", idade=" + idade +
+                ", peso=" + peso +
+                ", raca='" + raca + '\'' +
+                '}';
     }
 }

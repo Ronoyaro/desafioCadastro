@@ -1,7 +1,0 @@
-1 - nick fury
-2 - Cachorro
-3 - Macho
-4 - [9, ssa, brazil]
-5 - 5.0
-6 - 6.0
-7 - vira lata

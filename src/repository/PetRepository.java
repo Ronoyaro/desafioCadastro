@@ -22,9 +22,10 @@ public class PetRepository {
 
 
     public static void main(String[] args) throws IOException {
-//        save(new Pet("nick fury", Tipo.CACHORRO, Sexo.MACHO, List.of("9", "ssa", "brazil"), 5D, 6D, "vira lata"));
-//        getAllPathsPet();
-        list().forEach(System.out::println);
+
+        removePet(0);
+        petsList().forEach(System.out::println);
+
 
     }
 
@@ -38,7 +39,7 @@ public class PetRepository {
         throw new IOException("O Pet já existe!");
     }
 
-    public static void save(Pet pet) throws IOException {
+    public static void savePet(Pet pet) throws IOException {
         Path filePet = createFile(pet);
         try (BufferedWriter br = Files.newBufferedWriter(filePet)) {
             br.write("1 - " + pet.getNome() + "\n");
@@ -67,22 +68,29 @@ public class PetRepository {
         return archivesPet;
     }
 
-    public static List<Pet> list() {
-        List<Pet> pets = new ArrayList<>();
+    public static void removePet(int index) throws IOException {
+        Files.deleteIfExists(getAllPathsPet().get(index));
+        System.out.println("Removido com sucesso");
+//        System.out.println(getAllPathsPet().get(index)); //caminho
+//        System.out.println(listAll().get(index)); //objeto pet
+    }
+
+    public static List<Pet> petsList() {
+        List<Pet> listPets = new ArrayList<>();
         getAllPathsPet().forEach(p -> {
             try (Stream<String> path = Files.lines(p)) {
-                List<String> list = path.map(s -> s.replaceAll("^\\d+\\s*-\\s*", "")).toList();
+                List<String> list = path.map(s -> s.replaceAll("^\\d+\\s-\\s", "")).toList();
                 List<String> adress = Arrays.stream(list.get(3).split(",")).toList();
                 Pet pet = new Pet(list.getFirst(),
                         (list.get(1).equalsIgnoreCase("Cachorro") ? Tipo.CACHORRO : Tipo.GATO),
                         (list.get(2).equalsIgnoreCase("Macho") ? Sexo.MACHO : Sexo.FEMEA),
                         adress, Double.parseDouble(list.get(4)), Double.parseDouble(list.get(5)), list.get(6));
-                pets.add(pet);
+                listPets.add(pet);
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
-        return pets;
+        return listPets;
     }
 }
