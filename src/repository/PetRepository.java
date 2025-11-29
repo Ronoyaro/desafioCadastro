@@ -20,15 +20,6 @@ import java.util.stream.Stream;
 
 public class PetRepository {
 
-
-    public static void main(String[] args) throws IOException {
-
-        removePet(0);
-        petsList().forEach(System.out::println);
-
-
-    }
-
     private static Path createFile(Pet pet) throws IOException {
         LocalDateTime now = LocalDateTime.now();
         String petNameArchive = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm")) + pet.getNome().replace(" ", "") + ".txt";
@@ -50,7 +41,6 @@ public class PetRepository {
             br.write("6 - " + pet.getPeso().toString() + "\n");
             br.write("7 - " + pet.getRaca() + "\n");
             br.flush();
-            System.out.println("Pet criado com sucesso!");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -69,17 +59,20 @@ public class PetRepository {
     }
 
     public static void removePet(int index) throws IOException {
-        Files.deleteIfExists(getAllPathsPet().get(index));
-        System.out.println("Removido com sucesso");
-//        System.out.println(getAllPathsPet().get(index)); //caminho
-//        System.out.println(listAll().get(index)); //objeto pet
+        Files.delete(getAllPathsPet().get(index));
     }
 
-    public static List<Pet> petsList() {
+    public static Pet find(int index) {
+        return findAll().get(index);
+    }
+
+    public static List<Pet> findAll() {
         List<Pet> listPets = new ArrayList<>();
         getAllPathsPet().forEach(p -> {
             try (Stream<String> path = Files.lines(p)) {
-                List<String> list = path.map(s -> s.replaceAll("^\\d+\\s-\\s", "")).toList();
+                List<String> list = path.map(s -> s.replaceAll("^\\d+\\s-\\s", ""))
+                        .map(s -> s.replaceAll("[\\[\\]]", ""))
+                        .toList();
                 List<String> adress = Arrays.stream(list.get(3).split(",")).toList();
                 Pet pet = new Pet(list.getFirst(),
                         (list.get(1).equalsIgnoreCase("Cachorro") ? Tipo.CACHORRO : Tipo.GATO),
@@ -88,7 +81,7 @@ public class PetRepository {
                 listPets.add(pet);
 
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println(e.getMessage());
             }
         });
         return listPets;

@@ -1,7 +1,0 @@
-1 - Gato a Jato
-2 - Gato
-3 - Macho
-4 - [20, ssa, brazil]
-5 - 9.0
-6 - 9.0
-7 - new poodle
