@@ -67,8 +67,8 @@ public class Program {
                 System.out.printf("%-5d %-27s %-15s %-15s %-15s%n", count.getAndIncrement(),
                         p.getNome(),
                         p.getSexo().getSEXO(),
-                        p.getIdade().shortValue() + " anos",
-                        p.getPeso().shortValue() + " kgs");
+                        (p.getIdade() < 1 ? p.getIdade() + " meses" : p.getIdade().shortValue() + " anos"),
+                        (p.getPeso() < 1 ? p.getPeso() + " kgs" : p.getPeso().shortValue() + " kg"));
             });
             System.out.println("Pressione Enter para continuar");
             SCANNER.nextLine();
@@ -87,8 +87,8 @@ public class Program {
             System.out.printf("%-22s %-10s %-8s %-8s %-5s%n",
                     pet.getNome(),
                     pet.getSexo().getSEXO(),
-                    pet.getIdade().shortValue() + " anos",
-                    pet.getPeso().shortValue() + " kg",
+                    (pet.getIdade() < 1 ? pet.getIdade() + " meses" : pet.getIdade().shortValue() + " anos"),
+                    (pet.getPeso() < 1 ? pet.getPeso() + " kgs" : pet.getPeso().shortValue() + " kg"),
                     pet.getRaca());
 
             System.out.println("Pressione Enter para continuar");
