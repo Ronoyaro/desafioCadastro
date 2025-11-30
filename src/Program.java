@@ -1,19 +1,15 @@
 import entities.Pet;
 import enums.Sexo;
 import enums.Tipo;
-import repository.PetRepository;
 import services.FormularioService;
 import services.PetService;
-import utils.Validator;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Program {
-    static boolean finalizar = false;
-    static Integer opcao;
-    static String resposta;
     static final Scanner SCANNER = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
@@ -21,8 +17,8 @@ public class Program {
     }
 
     private static void menu() {
+        System.out.println("--- Seja Bem-vindo ao Sistema de Adoção de Pets ---");
         while (true) {
-            System.out.println("--- Seja Bem-vindo ao Sistema de Adoção de Pets ---");
             System.out.println("Escolha uma das opções a seguir:");
             System.out.println("1 - Cadastrar um novo pet");
             System.out.println("2 - Listar todos os pets cadastrado");
@@ -30,7 +26,8 @@ public class Program {
             System.out.println("4 - Editar um pet");
             System.out.println("5 - Deletar um pet cadastrado");
             System.out.println("5 - Sair");
-            opcao = Integer.parseInt(SCANNER.nextLine());
+            int opcao = SCANNER.nextInt();
+            SCANNER.nextLine();
             switch (opcao) {
                 case 1 -> cadastrar();
                 case 2 -> listarTodos();
@@ -64,7 +61,17 @@ public class Program {
 
     private static void listarTodos() {
         try {
-            PetService.findAll().forEach(System.out::println);
+            AtomicInteger count = new AtomicInteger(1);
+            System.out.printf("%-10s %-22s %-15s %-15s %-15s%n", "Id", "Nome", "Sexo", "Idade", "Peso");
+            PetService.findAll().forEach(p -> {
+                System.out.printf("%-5d %-27s %-15s %-15s %-15s%n", count.getAndIncrement(),
+                        p.getNome(),
+                        p.getSexo().getSEXO(),
+                        p.getIdade().shortValue() + " anos",
+                        p.getPeso().shortValue() + " kgs");
+            });
+            System.out.println("Pressione Enter para continuar");
+            SCANNER.nextLine();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -73,9 +80,20 @@ public class Program {
     private static void buscar() {
         try {
             System.out.println("Digite o ID do pet");
-            int id = Integer.parseInt(SCANNER.nextLine());
-            System.out.println(PetService.find(id));
-        } catch (IOException e){
+            Integer id = Integer.parseInt(SCANNER.nextLine());
+            Pet pet = PetService.findById(id - 1);
+            System.out.printf("%-22s %-10s %-8s %-10s %-7s%n", "Nome", "Sexo", "Idade", "Peso", "Raça");
+
+            System.out.printf("%-22s %-10s %-8s %-8s %-5s%n",
+                    pet.getNome(),
+                    pet.getSexo().getSEXO(),
+                    pet.getIdade().shortValue() + " anos",
+                    pet.getPeso().shortValue() + " kg",
+                    pet.getRaca());
+
+            System.out.println("Pressione Enter para continuar");
+            SCANNER.nextLine();
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -83,26 +101,50 @@ public class Program {
     private static void editar() {
         try {
             System.out.println("Digite o ID do pet");
-            int id = Integer.parseInt(SCANNER.nextLine());
-            System.out.println(PetService.find(id));
-            Pet pet = PetService.find(id);
-            System.out.println(pet);
+            Integer id = Integer.parseInt(SCANNER.nextLine());
+            Pet pet = PetService.findById(id - 1);
+            System.out.printf("%-22s %-10s %-8s %-10s %-7s%n", "Nome", "Sexo", "Idade", "Peso", "Raça");
+
+            System.out.printf("%-22s %-10s %-8s %-8s %-5s%n",
+                    pet.getNome(),
+                    pet.getSexo().getSEXO(),
+                    pet.getIdade().shortValue() + " anos",
+                    pet.getPeso().shortValue() + " kg",
+                    pet.getRaca());
+
             String name = FormularioService.answerNameQuestion();
             List<String> adress = FormularioService.answerAddressPetQuestion();
             Double age = FormularioService.answerAgePetQuestion();
             Double weight = FormularioService.answerWeightPetQuestion();
             String race = FormularioService.answerRacePetQuestion();
-            PetService.remove(0);
+            PetService.removeById(id - 1);
             Pet newPet = new Pet(name, pet.getTipo(), pet.getSexo(), adress, age, weight, race);
             PetService.save(newPet);
+            System.out.println("Pressione Enter para continuar");
+            SCANNER.nextLine();
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private static void remover(){
+    private static void remover() {
         try {
-            PetService.remove(0);
+            System.out.println("Digite o ID do pet");
+            int id = Integer.parseInt(SCANNER.nextLine());
+            Pet pet = PetService.findById(id - 1);
+            System.out.printf("%-22s %-10s %-8s %-10s %-7s%n", "Nome", "Sexo", "Idade", "Peso", "Raça");
+
+            System.out.printf("%-22s %-10s %-8s %-8s %-5s%n",
+                    pet.getNome(),
+                    pet.getSexo().getSEXO(),
+                    pet.getIdade().shortValue() + " anos",
+                    pet.getPeso().shortValue() + " kg",
+                    pet.getRaca());
+            System.out.println("Deseja remover? (S/N)");
+            String confirma = SCANNER.nextLine();
+            if (confirma.equalsIgnoreCase("s")) {
+                PetService.removeById(id - 1);
+            }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

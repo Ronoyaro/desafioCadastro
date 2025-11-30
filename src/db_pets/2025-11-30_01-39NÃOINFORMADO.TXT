@@ -1,0 +1,7 @@
+1 - NÃO INFORMADO
+2 - Gato
+3 - Femea
+4 - [9, ss, bb]
+5 - 0.5
+6 - 10.0
+7 - sla

@@ -20,7 +20,11 @@ public class FormularioService {
         try {
             System.out.println(readFormulario().getFirst());
             String namePet = SCANNER.nextLine();
-            if (!Validator.validateNamePet(namePet)) throw new IllegalArgumentException("Informe um sobrenome: Não permitido carateceres especiais");
+            if (namePet.isBlank()) {
+                return "NÃO INFORMADO";
+            }
+            if (!Validator.validateNamePet(namePet))
+                throw new IllegalArgumentException("Informe um sobrenome: Não permitido carateceres especiais");
             return namePet;
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -75,7 +79,7 @@ public class FormularioService {
             if (!Validator.validateAgePet(agePet)) {
                 throw new IllegalArgumentException("Idade acima de 20 anos não permitida");
             }
-            return Double.parseDouble(agePet);
+            return Double.parseDouble(agePet.replace(",", "."));
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             System.out.println("---Digite novamente---");

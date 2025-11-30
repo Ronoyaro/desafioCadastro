@@ -62,7 +62,7 @@ public class PetRepository {
         Files.delete(getAllPathsPet().get(index));
     }
 
-    public static Pet find(int index) {
+    public static Pet findById(int index) {
         return findAll().get(index);
     }
 

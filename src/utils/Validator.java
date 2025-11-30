@@ -21,7 +21,7 @@ public class Validator {
     }
 
     public static boolean validateAgePet(String age) {
-        return Double.parseDouble(age) <= 20;
+        return Double.parseDouble(age.replace(",", ".")) <= 20;
     }
 
     public static boolean validateWeightPet(String weightPet) {

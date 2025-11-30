@@ -11,12 +11,12 @@ public class PetService {
         PetRepository.savePet(pet);
     }
 
-    public static void remove(int index) throws IOException {
+    public static void removeById(int index) throws IOException {
         PetRepository.removePet(index);
     }
 
-    public static Pet find(int index) throws IOException {
-        return PetRepository.find(index);
+    public static Pet findById(int index) throws IOException {
+        return PetRepository.findById(index);
     }
 
     public static List<Pet> findAll() throws IOException {
