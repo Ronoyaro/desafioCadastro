@@ -3,7 +3,6 @@ package utils;
 import enums.Sexo;
 import enums.Tipo;
 
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class Validator {
@@ -17,7 +16,7 @@ public class Validator {
     }
 
     public static boolean validateSexPet(String name) {
-        return name.equalsIgnoreCase(Sexo.MACHO.getSEXO()) || name.equalsIgnoreCase(Sexo.FEMEA.getSEXO());
+        return name.equalsIgnoreCase(Sexo.MACHO.getSexo()) || name.equalsIgnoreCase(Sexo.FEMEA.getSexo());
     }
 
     public static boolean validateAgePet(String age) {

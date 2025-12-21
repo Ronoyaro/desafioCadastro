@@ -4,14 +4,14 @@ public enum Sexo {
     MACHO("Macho"),
     FEMEA("Femea");
 
-    private final String SEXO;
+    private final String sexo;
 
     Sexo(String sexo) {
-        this.SEXO = sexo;
+        this.sexo = sexo;
     }
 
-    public String getSEXO() {
-        return SEXO;
+    public String getSexo() {
+        return sexo;
     }
 
 }

@@ -43,13 +43,13 @@ public class Program {
     }
 
     private static void cadastrar() {
-        String namePet = FormularioService.answerNameQuestion();
-        Tipo typePet = FormularioService.answerTypePetQuestion();
-        Sexo sexPet = FormularioService.answerSexPetQuestion();
-        List<String> adressPet = FormularioService.answerAddressPetQuestion();
-        Double agePet = FormularioService.answerAgePetQuestion();
-        Double weightPet = FormularioService.answerWeightPetQuestion();
-        String racePet = FormularioService.answerRacePetQuestion();
+        String namePet = FormularioService.nameQuestion();
+        Tipo typePet = FormularioService.typeQuestion();
+        Sexo sexPet = FormularioService.sexPetQuestion();
+        List<String> adressPet = FormularioService.AddressPetQuestion();
+        Double agePet = FormularioService.agePetQuestion();
+        Double weightPet = FormularioService.weightPetQuestion();
+        String racePet = FormularioService.racePetQuestion();
 
         Pet pet = new Pet(namePet, typePet, sexPet, adressPet, agePet, weightPet, racePet);
         try {
@@ -66,7 +66,7 @@ public class Program {
             PetService.findAll().forEach(p -> {
                 System.out.printf("%-5d %-27s %-15s %-15s %-15s%n", count.getAndIncrement(),
                         p.getNome(),
-                        p.getSexo().getSEXO(),
+                        p.getSexo().getSexo(),
                         (p.getIdade() < 1 ? p.getIdade() + " meses" : p.getIdade().shortValue() + " anos"),
                         (p.getPeso() < 1 ? p.getPeso() + " kgs" : p.getPeso().shortValue() + " kg"));
             });
@@ -86,7 +86,7 @@ public class Program {
 
             System.out.printf("%-22s %-10s %-8s %-8s %-5s%n",
                     pet.getNome(),
-                    pet.getSexo().getSEXO(),
+                    pet.getSexo().getSexo(),
                     (pet.getIdade() < 1 ? pet.getIdade() + " meses" : pet.getIdade().shortValue() + " anos"),
                     (pet.getPeso() < 1 ? pet.getPeso() + " kgs" : pet.getPeso().shortValue() + " kg"),
                     pet.getRaca());
@@ -107,16 +107,16 @@ public class Program {
 
             System.out.printf("%-22s %-10s %-8s %-8s %-5s%n",
                     pet.getNome(),
-                    pet.getSexo().getSEXO(),
+                    pet.getSexo().getSexo(),
                     pet.getIdade().shortValue() + " anos",
                     pet.getPeso().shortValue() + " kg",
                     pet.getRaca());
 
-            String name = FormularioService.answerNameQuestion();
-            List<String> adress = FormularioService.answerAddressPetQuestion();
-            Double age = FormularioService.answerAgePetQuestion();
-            Double weight = FormularioService.answerWeightPetQuestion();
-            String race = FormularioService.answerRacePetQuestion();
+            String name = FormularioService.nameQuestion();
+            List<String> adress = FormularioService.AddressPetQuestion();
+            Double age = FormularioService.agePetQuestion();
+            Double weight = FormularioService.weightPetQuestion();
+            String race = FormularioService.racePetQuestion();
             PetService.removeById(id - 1);
             Pet newPet = new Pet(name, pet.getTipo(), pet.getSexo(), adress, age, weight, race);
             PetService.save(newPet);
@@ -136,7 +136,7 @@ public class Program {
 
             System.out.printf("%-22s %-10s %-8s %-8s %-5s%n",
                     pet.getNome(),
-                    pet.getSexo().getSEXO(),
+                    pet.getSexo().getSexo(),
                     pet.getIdade().shortValue() + " anos",
                     pet.getPeso().shortValue() + " kg",
                     pet.getRaca());

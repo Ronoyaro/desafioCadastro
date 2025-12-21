@@ -1,7 +1,0 @@
-1 - xaxa xaxa
-2 - Gato
-3 - Macho
-4 - [9, ss, bb]
-5 - 9.0
-6 - 9.0
-7 - sla
